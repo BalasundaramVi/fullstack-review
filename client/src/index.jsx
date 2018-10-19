@@ -36,7 +36,7 @@ class App extends React.Component {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({term: term})
     }).then((data) => {
-      return data.json()
+      this.displayPage();
     })
   }
 
