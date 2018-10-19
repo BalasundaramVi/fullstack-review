@@ -13,6 +13,22 @@ class App extends React.Component {
 
   }
 
+  componentDidMount() {
+    this.displayPage();
+  }
+
+  displayPage() {
+    fetch('/repos', {
+      method: "GET",
+    }).then((rawData) => {
+      return rawData.json();
+    }).then((repos) => {
+      var newState = {repos: repos};
+      this.setState(newState);
+    })
+  }
+
+
   search (term) {
     console.log(`${term} was searched`);
     fetch('/repos', {
@@ -21,17 +37,14 @@ class App extends React.Component {
       body: JSON.stringify({term: term})
     }).then((data) => {
       return data.json()
-    }).then((res) => {
-      console.log(res.length);
     })
-    // TODO
   }
 
   render () {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <RepoList repos={this.state.repos}/>
     </div>)
   }
 }
