@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+// mongoose.connect('mongodb://localhost/fetcher'); //put in Heroku address
+mongoose.connect('mongodb://heroku_06tl7rnj:2bc3l00po2llq234r4mk0lhcbt@ds137283.mlab.com:37283/heroku_06tl7rnj');
 
 let repoSchema = mongoose.Schema({
   repoID: {type: String, unique: true},
