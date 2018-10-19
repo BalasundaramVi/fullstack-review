@@ -15,6 +15,15 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
+    fetch('/repos', {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({term: term})
+    }).then((data) => {
+      return data.json()
+    }).then((res) => {
+      console.log(res.length);
+    })
     // TODO
   }
 
