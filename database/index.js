@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/fetcher'); //put in Heroku address
-mongoose.connect(process.env.MONGODB_URI);
+var connectionPort;
+if (process.env.MONGODB_URI === undefined) {
+  connectionPort = 'mongodb://localhost/fetcher';
+} else {
+  connectionPort = process.env.MONGODB_URI;
+}
+mongoose.connect(connectionPort);
 
 let repoSchema = mongoose.Schema({
   repoID: {type: String, unique: true},
@@ -30,6 +36,9 @@ let compareDates = (repo1, repo2) => {
 
 let retrieve = (cb) => {
   Repo.find((err, repos) => {
+    if (err) {
+      console.log(err);
+    }
     repos.sort(compareDates);
     var targetRepos = repos.slice(0, 25)
     cb(targetRepos);

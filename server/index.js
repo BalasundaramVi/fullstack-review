@@ -19,6 +19,11 @@ app.post('/repos', function (req, res) {
   var username = req.body.term;
   var data;
   var data = helper.getReposByUsername(username, (err, results, body) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Saving data..');
+    }
     repos = JSON.parse(body);
     for (var i = 0; i < repos.length; i++) {
       var repo = {};
@@ -41,7 +46,7 @@ app.get('/repos', function (req, res) {
 });
 
 let port = process.env.PORT;
-if (port === null || port === "") {
+if (port === null || port === "" || port === undefined) {
   port = 1128;
 }
 
